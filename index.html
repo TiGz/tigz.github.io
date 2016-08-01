@@ -10,22 +10,27 @@
 
 	<link rel="stylesheet" type="text/css" href="reset-fonts-grids.css" media="all" /> 
 	<link rel="stylesheet" type="text/css" href="resume.css" media="all" />
+	
+	<script src="https://code.jquery.com/jquery-3.1.0.slim.min.js" integrity="sha256-cRpWjoSOw5KcyIOaZNo4i6fZ9tKPhYYb6i5T9RSVJG8="   crossorigin="anonymous"></script>
+	
+	<script src="jspdf.min.js"></script>
+	
 </head>
 <body>
 
 <div id="doc2" class="yui-t7">
 	<div id="inner">
-	
 		<div id="hd">
 			<div class="yui-gc">
 				<div class="yui-u first">
 					<h1>Adam Chesney</h1>
 					<h2>Software Engineer, Architect</h2>
 				</div>
-
+				<div id="editor"></div>
 				<div class="yui-u">
 					<div class="contact-info">
 						<h3><a href="mailto:ajchesney@gmail.com">ajchesney@gmail.com</a></h3>
+						<h3><a href="adamchesney.pdf">Download PDF</a></h3>
 					</div><!--// .contact-info -->
 				</div>
 			</div><!--// .yui-gc -->
@@ -217,6 +222,23 @@
 
 
 </div><!--// doc -->
+
+<script>
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+
+$('#cmd').click(function () {
+    doc.fromHTML($('#doc2').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('adam-chesney.pdf');
+});
+</script>
 
 </body>
 </html>
