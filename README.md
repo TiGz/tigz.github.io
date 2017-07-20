@@ -5,4 +5,6 @@ To upload latest version
 
     git commit -am "updates" && git push origin master
 
-Push to upload
+Generate PDF
+
+    http://www.htm2pdf.co.uk
