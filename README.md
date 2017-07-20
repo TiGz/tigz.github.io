@@ -7,4 +7,4 @@ To upload latest version
 
 Generate PDF
 
-    http://www.htm2pdf.co.uk
+    http://webpagetopdf.com
