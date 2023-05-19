@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tuber Check</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    #banner {
+      background-image: url('tubercheck.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 200px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #loading-text {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    #report {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+    <div id="banner"></div>
+    <label for="video-url">Youtube Video Url:</label>
+    <br>
+    <input type="text" id="video-url">
+    <br>
+    <button id="check-btn" disabled>Check Video</button>
+    <div id="loading-text"></div>
+    <div id="report"></div>
+</div>
+
+<script>
+    const videoUrlInput = document.getElementById("video-url");
+    const checkBtn = document.getElementById("check-btn");
+    const loadingText = document.getElementById("loading-text");
+    const reportDiv = document.getElementById("report");
+
+    videoUrlInput.addEventListener("input", () => {
+      checkBtn.disabled = !isValidUrl(videoUrlInput.value);
+    });
+
+    checkBtn.addEventListener("click", () => {
+      loadingText.innerHTML = "Transcribing video...";
+      setTimeout(() => {
+        loadingText.innerHTML = "Analyzing video...";
+        setTimeout(() => {
+          loadingText.innerHTML = "Compiling report...";
+          setTimeout(() => {
+            const requestBody = JSON.stringify({ url: videoUrlInput.value });
+            fetch("https://makxzivnzvmklntjyukk.functions.supabase.co/check-video", {
+              method: "POST",
+              body: requestBody
+            })
+              .then(response => response.json())
+              .then(data => displayReport(data))
+              .catch(error => console.log(error));
+          }, 20000);
+        }, 10000);
+      }, 5000);
+    });
+
+    function isValidUrl(url) {
+      // Add your URL validation logic here
+      return url !== "";
+    }
+
+    function displayReport(data) {
+      loadingText.innerHTML = "";
+      reportDiv.innerHTML = `
+        <h2>Report:</h2>
+        <p><strong>Summary:</strong> ${data.summary}</p>
+        <p><strong>Bad Language:</strong> ${data.bad_language}</p>
+        <p><strong>Sexual Content:</strong> ${data.sexual_content}</p>
+        <p><strong>Coercion:</strong> ${data.coercion}</p>
+        <p><strong>Min Age Rating:</strong> ${data.min_age_rating}</p>
+        <p><strong>Notes:</strong></p>
+        <ul>${data.notes.map(note => `<li>${note}</li>`).join("")}</ul>
+      `;
+    }
+  </script>
+</body>
+</html>
