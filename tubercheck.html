@@ -228,7 +228,7 @@
       loadingGif.style.display = "block";
       loadingText.style.display = "block";
       const requestBody = JSON.stringify({ url: videoUrlInput.value });
-      fetch("https://makxzivnzvmklntjyukk.functions.supabase.co/check-video", {
+      fetch("https://makxzivnzvmklntjyukk.functions.supabase.co/check-video-v3", {
         method: "POST",
         body: requestBody
       })
