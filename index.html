@@ -4,84 +4,608 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adam Chesney | Full Stack Engineer | ajchesney@gmail.com</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Adam Chesney | Full Stack Engineer & Architect</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --color-bg: #fafaf9;
+            --color-surface: #ffffff;
+            --color-text: #1c1917;
+            --color-text-secondary: #57534e;
+            --color-accent: #0d9488;
+            --color-accent-light: #14b8a6;
+            --color-border: #e7e5e4;
+            --color-border-strong: #d6d3d1;
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #5a125d;
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 1000;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            color: #5a125d;
+        .cv-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
         }
 
-        .section-title {
-            border-bottom: 2px solid #5a125d;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            font-size: 1.5em;
+        /* Header */
+        .cv-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: start;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 3rem;
         }
 
-        .contact-info a {
-            color: #5a125d;
+        .cv-header__name {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-header__title {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .cv-header__contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .cv-header__contact a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .cv-header__contact a:hover {
+            color: var(--color-accent);
+        }
+
+        .cv-header__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-print {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-text);
+            color: var(--color-surface);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-print:hover {
+            background: var(--color-accent);
+            transform: translateY(-1px);
+        }
+
+        /* Sections */
+        .cv-section {
+            margin-bottom: 3rem;
+        }
+
+        .cv-section__title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cv-section__title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--color-border-strong), transparent);
+        }
+
+        /* Profile */
+        .cv-profile p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--color-text-secondary);
+            max-width: 65ch;
+        }
+
+        .cv-profile p + p {
+            margin-top: 1rem;
+        }
+
+        .cv-profile strong {
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        /* Highlight section */
+        .cv-highlight {
+            background: linear-gradient(135deg, var(--color-accent) 0%, #0f766e 100%);
+            color: white;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cv-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: translate(30%, -30%);
+        }
+
+        .cv-highlight__title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        .cv-highlight p {
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .cv-highlight a {
+            color: white;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* Domains grid */
+        .cv-domains {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--color-border);
+            border: 1px solid var(--color-border);
+            margin-bottom: 3rem;
+        }
+
+        .cv-domain {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .cv-domain__name {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-text);
+        }
+
+        /* Skills */
+        .cv-skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .cv-skill {
+            padding-left: 1rem;
+            border-left: 2px solid var(--color-accent);
+        }
+
+        .cv-skill__title {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-skill__desc {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Technical tags */
+        .cv-tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .cv-tech-column h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .cv-tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .cv-tech-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 0.4rem 0.75rem;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            transition: all 0.2s ease;
+        }
+
+        .cv-tech-tag:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Experience timeline */
+        .cv-timeline {
+            position: relative;
+        }
+
+        .cv-job {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2.5rem;
+            border-left: 1px solid var(--color-border);
+        }
+
+        .cv-job:last-child {
+            border-left-color: transparent;
+            padding-bottom: 0;
+        }
+
+        .cv-job::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 0.5rem;
+            width: 7px;
+            height: 7px;
+            background: var(--color-accent);
+            border-radius: 50%;
+        }
+
+        .cv-job__header {
+            margin-bottom: 0.75rem;
+        }
+
+        .cv-job__company {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-job__role {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cv-job__desc {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .cv-job__achievements {
+            margin-top: 1rem;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .cv-job__achievements li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .cv-job__achievements li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+        }
+
+        .cv-job__achievements strong {
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        /* Education */
+        .cv-education {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 2rem;
+        }
+
+        .cv-education__school {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-education__degree {
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .cv-education__thesis {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-style: italic;
+            padding-left: 1rem;
+            border-left: 2px solid var(--color-accent);
+        }
+
+        /* Links section */
+        .cv-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cv-link-group h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-link-group a {
+            display: block;
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .cv-link-group a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Interests */
+        .cv-interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .cv-interest {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+        }
+
+        .cv-interest a {
+            color: inherit;
             text-decoration: none;
         }
 
-        .contact-info a:hover {
-            text-decoration: underline;
+        .cv-interest:hover {
+            border-color: var(--color-accent);
+            color: var(--color-text);
         }
 
-        .job {
-            margin-bottom: 20px;
+        /* Footer */
+        .cv-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
         }
 
-        .talent ul {
-            list-style: none;
-            padding: 0;
+        .cv-footer p {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
         }
 
-        .talent ul li {
-            background: #5a125d;
-            color: #fff;
-            padding: 5px 10px;
-            margin-bottom: 5px;
-            display: inline-block;
+        .cv-footer a {
+            color: var(--color-accent);
+            text-decoration: none;
         }
 
-        .talent ul li.last {
-            margin-right: 0;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cv-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .cv-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .cv-header__actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .cv-header__contact {
+                justify-content: center;
+            }
+
+            .cv-domains {
+                grid-template-columns: 1fr;
+            }
+
+            .cv-tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cv-job {
+                padding-left: 1.5rem;
+            }
         }
 
-        .yui-gf {
-            margin-bottom: 30px;
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                font-size: 11pt;
+            }
+
+            body::before {
+                display: none;
+            }
+
+            .cv-container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .btn-print {
+                display: none !important;
+            }
+
+            .cv-header {
+                padding-bottom: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cv-section {
+                margin-bottom: 1.5rem;
+            }
+
+            .cv-highlight {
+                background: var(--color-bg) !important;
+                color: var(--color-text) !important;
+                border: 1px solid var(--color-border);
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cv-highlight a {
+                color: var(--color-accent) !important;
+            }
+
+            .cv-job {
+                page-break-inside: avoid;
+                padding-bottom: 1.5rem;
+            }
+
+            .cv-section__title {
+                page-break-after: avoid;
+            }
+
+            a[href]::after {
+                content: none;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <header class="text-center">
-            <h1>Adam Chesney</h1>
-            <h2>Full Stack Engineer, Architect</h2>
-            <p><a href="mailto:ajchesney@gmail.com">ajchesney@gmail.com</a></p>
-            <p><a href="adamchesney.pdf" class="btn btn-primary">Download PDF</a></p>
+    <div class="cv-container">
+
+        <!-- Header -->
+        <header class="cv-header">
+            <div class="cv-header__info">
+                <h1 class="cv-header__name">Adam Chesney</h1>
+                <p class="cv-header__title">Full Stack Engineer & Architect</p>
+                <div class="cv-header__contact">
+                    <a href="mailto:ajchesney@gmail.com">ajchesney@gmail.com</a>
+                    <a href="https://www.linkedin.com/in/adamchesney" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/TiGz" target="_blank">GitHub</a>
+                </div>
+            </div>
+            <div class="cv-header__actions">
+                <button onclick="window.print()" class="btn-print">Save as PDF</button>
+            </div>
         </header>
 
-        <section class="profile yui-gf">
-            <div class="section-title">Profile</div>
+        <!-- Profile -->
+        <section class="cv-section cv-profile">
+            <h2 class="cv-section__title">Profile</h2>
             <p>
-                25 years building innovative software products and services in agile environments.
+                <strong>25 years</strong> building innovative software products and services in agile environments.
                 At my best when distilling complex business requirements into a clear, simple and lean software architecture.
+            </p>
+            <p>
                 A good communicator, interested in the wider business environment and able to offer strategic insight as
                 well as technical leadership. A passion for working with smart (and funny) people to engineer great product.
             </p>
@@ -90,212 +614,273 @@
             </p>
         </section>
 
-        <section class="currently-playing yui-gf">
-            <div class="section-title">Higher Level Development</div>
+        <!-- Higher Level Dev Highlight -->
+        <div class="cv-highlight">
+            <h3 class="cv-highlight__title">Higher Level Development</h3>
             <p>
                 When Anthropic released Claude Sonnet 3.5 on Friday, June 21st, 2024, software development changed forever.
                 Since then I have been building my own LLM-Powered Software Engineering Agents to become a 10x engineer.
+                <a href="https://higherlevel.dev" target="_blank">Higher Level Dev is the future, and the future is now.</a>
             </p>
-            <p>
-                <a target="_blank" href="https://higherlevel.dev">Higher Level Dev is the future, and the future is now.</a>
-            </p>
+        </div>
+
+        <!-- Domains -->
+        <div class="cv-domains">
+            <div class="cv-domain">
+                <span class="cv-domain__name">Agentic Systems</span>
+            </div>
+            <div class="cv-domain">
+                <span class="cv-domain__name">Banking & Payments</span>
+            </div>
+            <div class="cv-domain">
+                <span class="cv-domain__name">AI & LLMs</span>
+            </div>
+        </div>
+
+        <!-- Skills -->
+        <section class="cv-section">
+            <h2 class="cv-section__title">Skills</h2>
+            <div class="cv-skills">
+                <div class="cv-skill">
+                    <h4 class="cv-skill__title">Agentic Systems</h4>
+                    <p class="cv-skill__desc">Leveraging both frontier and open source models to build state of the art, truly intelligent Agentic Systems</p>
+                </div>
+                <div class="cv-skill">
+                    <h4 class="cv-skill__title">Infrastructure</h4>
+                    <p class="cv-skill__desc">Server side engineering with a focus on open source tools, cloud computing and data engineering</p>
+                </div>
+                <div class="cv-skill">
+                    <h4 class="cv-skill__title">API Design</h4>
+                    <p class="cv-skill__desc">A talent for building developer friendly web service APIs that scale</p>
+                </div>
+            </div>
         </section>
 
-        <section class="domains yui-gf">
-            <div class="section-title">Domains</div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>AI & LLMs</h5>
+        <!-- Technical -->
+        <section class="cv-section">
+            <h2 class="cv-section__title">Technical</h2>
+            <div class="cv-tech-grid">
+                <div class="cv-tech-column">
+                    <h4>Languages & Frameworks</h4>
+                    <div class="cv-tech-tags">
+                        <span class="cv-tech-tag">Java</span>
+                        <span class="cv-tech-tag">Kotlin</span>
+                        <span class="cv-tech-tag">Quarkus</span>
+                        <span class="cv-tech-tag">Spring</span>
+                        <span class="cv-tech-tag">NodeJS</span>
+                        <span class="cv-tech-tag">TypeScript</span>
+                        <span class="cv-tech-tag">Vue</span>
+                        <span class="cv-tech-tag">React</span>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h5>Banking & Payments</h5>
+                <div class="cv-tech-column">
+                    <h4>Infrastructure & Cloud</h4>
+                    <div class="cv-tech-tags">
+                        <span class="cv-tech-tag">AI & LLMs</span>
+                        <span class="cv-tech-tag">AWS</span>
+                        <span class="cv-tech-tag">GCP</span>
+                        <span class="cv-tech-tag">Docker</span>
+                        <span class="cv-tech-tag">Kubernetes</span>
+                        <span class="cv-tech-tag">PostgreSQL</span>
+                        <span class="cv-tech-tag">Supabase</span>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h5>Dev Tools</h5>
+                <div class="cv-tech-column">
+                    <h4>Practices & Tools</h4>
+                    <div class="cv-tech-tags">
+                        <span class="cv-tech-tag">OAuth2 / OIDC</span>
+                        <span class="cv-tech-tag">Microservices</span>
+                        <span class="cv-tech-tag">CI/CD</span>
+                        <span class="cv-tech-tag">TDD</span>
+                        <span class="cv-tech-tag">GraphQL</span>
+                        <span class="cv-tech-tag">Event-Driven</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="skills yui-gf">
-            <div class="section-title">Skills</div>
-            <div class="talent">
-                <h5>AI Augmented Development</h5>
-                <p>Pioneering a new approach to software development using agentic workflows to radically improve software developer productivity</p>
-            </div>
-            <div class="talent">
-                <h5>Infrastructure</h5>
-                <p>Server side engineering with a focus on open source tools, cloud computing and data engineering</p>
-            </div>
-            <div class="talent">
-                <h5>API Design</h5>
-                <p>A talent for building developer friendly web service APIs that scale</p>
-            </div>
-        </section>
+        <!-- Experience -->
+        <section class="cv-section">
+            <h2 class="cv-section__title">Experience</h2>
+            <div class="cv-timeline">
 
-        <section class="technical yui-gf">
-            <div class="section-title">Technical</div>
-            <div class="row">
-                <div class="col-md-4">
-                    <ul class="talent">
-                        <li>Java, Kotlin</li>
-                        <li>Quarkus, Spring</li>
-                        <li>NodeJS</li>
-                        <li>JavaScript</li>
-                        <li>Vue, React</li>
-                        <li class="last">HTML, CSS</li>
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Incept5</h3>
+                        <p class="cv-job__role">Lead AI Engineer · Dec 2024 – Present</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Shaping the tech stack of the future. Building <a href="https://www.incept5.ai/eve/meet-eve" target="_blank">Eve Horizon</a>, our own agentic toolkit that helps us radically accelerate engineering efforts across our organisation and those of our clients.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Higher Level Software Ltd</h3>
+                        <p class="cv-job__role">Founder · Aug 2024 – Present</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        We design and deliver custom agentic AI systems for organisations that need results, not experiments.
+                        With frontier models and our internal build agents, we turn complex software requirements into production-ready systems—fast.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Velo Payments</h3>
+                        <p class="cv-job__role">Lead API Engineer · Jan 2018 – Aug 2024</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Velo Payments is an "all remote, no offices" start-up that was re-imagining business payments for the gig-economy.
+                        Working remotely with a great team to engineer a truly next-gen, data-driven, cloud-agnostic payments platform with bank-grade security.
+                    </p>
+                    <ul class="cv-job__achievements">
+                        <li>Increased platform throughput by <strong>10x</strong></li>
+                        <li>Completely re-designed security architecture for multi-deployment scenarios including inside bank networks</li>
+                        <li>Architected new high-performance modulithic architecture</li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <ul class="talent">
-                        <li>AI, LLMs, Prompts</li>
-                        <li>Microservices, Functions</li>
-                        <li>AWS & GCP</li>
-                        <li>Docker, Kubernetes</li>
-                        <li>PostgreSQL, Supabase</li>
-                        <li class="last">Messaging & Eventing</li>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">AI Music</h3>
+                        <p class="cv-job__role">Lead API Engineer · Feb 2017 – Jan 2018</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Led architecture and engineering efforts to build Google Cloud infrastructure supporting a highly ambitious mobile app.
+                        Spring Boot API, large social graph, innovative audio processing components and TensorFlow models in Google ML Engine.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Cloudburst Strategy</h3>
+                        <p class="cv-job__role">Founder, Architect & Engineer · Jan 2016 – Jan 2018</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Consultancy specialising in emerging cloud technologies. Built proof of concepts and MVPs focusing on testing hypotheses and rapid iteration.
+                        Helped organisations in leisure travel build products using Google's Flexible App Engine with Spring Boot microservices.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Screentime Labs</h3>
+                        <p class="cv-job__role">CTO & Engineer · Mar 2015 – Jan 2016</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Joined to help grow the engineering team and company. Worked with Google App Engine and serious Android/iOS development.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Oracle Corporation</h3>
+                        <p class="cv-job__role">Principal Software Engineer · Mar 2010 – Mar 2015</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Part of the Oracle Business Intelligence Infrastructure Team in Bristol, working on BI Platform, Fusion Applications and Oracle Public Cloud.
+                        Generally operating as tech lead within Scrum teams.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Fourthmate</h3>
+                        <p class="cv-job__role">Founder, Architect & Engineer · Mar 2013 – Mar 2015</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Side project building an Android client and Spring/CouchDB/ElasticSearch backend for visual work tracking on super yachts and schools.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Comtec Group</h3>
+                        <p class="cv-job__role">Travel Gateway Architect · May 2008 – Mar 2010</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Designed a modular and highly scalable flight booking engine using Test Driven Design, Spring 3, Spring Web Services and Maven.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Onelink Travel Systems</h3>
+                        <p class="cv-job__role">Lead Architect & Engineer · Dec 2008 – May 2009</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Designed a JEE-based, highly scalable payment settlement system for AWS (EC2, SQS, S3) capable of handling 300M+ transactions/year.
+                    </p>
+                </div>
+
+                <div class="cv-job">
+                    <div class="cv-job__header">
+                        <h3 class="cv-job__company">Multicom Products Ltd</h3>
+                        <p class="cv-job__role">Chief Architect & Development Team Leader · Sep 1999 – Dec 2008</p>
+                    </div>
+                    <p class="cv-job__desc">
+                        Led development team building an industry-leading XML web service on open source Java.
+                        Responsibilities included systems architecture, software engineering, cross-department coordination, and team management.
+                    </p>
+                    <ul class="cv-job__achievements">
+                        <li>Migrated platform from Visual C++ to Open Source Java</li>
+                        <li>Designed & implemented the <strong>first leisure GDS Web Service in the UK</strong></li>
+                        <li>Created Java/XML data binding and IoC frameworks before they were mainstream</li>
+                        <li>Built high-performance XML-aware load balancer with sticky sessions</li>
+                        <li>Implemented automated testing using real-world sessions for regression testing</li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <ul class="talent">
-                        <li>SQL, NoSQL, Graph DB's</li>
-                        <li>Security, OAuth2, OIDC</li>
-                        <li>Gradle, Maven</li>
-                        <li>CI & CD</li>
-                        <li>Test Driven Development</li>
-                        <li class="last">Python, Android, GraphQL</li>
-                    </ul>
+
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="cv-section">
+            <h2 class="cv-section__title">Education</h2>
+            <div class="cv-education">
+                <h3 class="cv-education__school">University of Bristol, UK</h3>
+                <p class="cv-education__degree">MEng Computer Systems Engineering — <strong>2:1</strong></p>
+                <p class="cv-education__thesis">
+                    Final year thesis: C++ Neural Networks with genetic algorithms to converge on optimum network topology for any given problem domain & dataset.
+                </p>
+            </div>
+        </section>
+
+        <!-- Links -->
+        <section class="cv-section">
+            <h2 class="cv-section__title">Connect</h2>
+            <div class="cv-links">
+                <div class="cv-link-group">
+                    <h4>LinkedIn</h4>
+                    <a href="https://www.linkedin.com/in/adamchesney" target="_blank">linkedin.com/in/adamchesney</a>
+                </div>
+                <div class="cv-link-group">
+                    <h4>GitHub</h4>
+                    <a href="https://github.com/TiGz" target="_blank">github.com/TiGz</a>
+                    <a href="https://github.com/CloudburstStrategy" target="_blank">github.com/CloudburstStrategy</a>
                 </div>
             </div>
         </section>
 
-        <section class="experience yui-gf">
-            <div class="section-title">Experience</div>
-            <div class="job">
-                <h4>Higher Level Software Ltd</h4>
-                <h5>Founder (Aug 2024 to Present)</h5>
-                <p>
-                    Pioneering a new approach to software development using LLM-Powered Software Engineering Agents.
-                    I have been building the <a target="_blank" href="https://www.higherleveldev.com/devkit">Higher Level Dev Kit</a> which is a NodeJS server running Langchain/Langgraph powered agents and a Vue3 web UI.
-                </p>
-            </div>
-            <div class="job">
-                <h4>Velo Payments</h4>
-                <h5>Lead API Engineer (Jan 2018 to Aug 2024)</h5>
-                <p>
-                    Velo Payments is a an "all remote, no offices" start-up that was re-imagining 
-                    business payments for the gig-economy. Working remotely with a great team of people to engineer a truly next-gen, data-driven, 
-                    cloud-agnostic payments platform with bank-grade security. During my time with Velo, I have been responsible for, among other 
-                    things, designing new platform features, integrating a bunch of new payment rails, increasing the throughput of the platform 
-                    by a factor of 10+ and completely re-designing the security architecture in such a way that the platform can be deployed in 
-                    many different scenarios including inside a bank's own network. The last year or so have been spent re-imagining a new 
-                    high-performance modulithic architecture for a new set of products and building out the infrastructure components to support that.
-                </p>
-            </div>
-            <div class="job">
-                <h4>AI Music</h4>
-                <h5>Lead API Engineer (Feb 2017 to Jan 2018)</h5>
-                <p>
-                    AI Music was evolving music from a static, one-directional interaction to one of dynamic co-creation. I led the architecture and engineering efforts to build out Google Cloud infrastructure to support a highly ambitious mobile app as a first step on that journey. This involves a Spring Boot based API, a large social graph, many innovative audio processing components and Tensor Flow models running in Google Machine Learning Engine.
-                </p>
-            </div>
-            <div class="job">
-                <h4>Cloudburst Strategy</h4>
-                <h5>Founder, Architect & Engineer (Jan 2016 to Jan 2018)</h5>
-                <p>
-                    Cloudburst Strategy is a consultancy that specialises in leveraging the latest emerging cloud technologies in order to deliver value to our clients. We can work with the business to build proof of concepts or MVPs quickly and cost-effictively focusing on testing hypotheses and rapid iteration. In 2016 we have been helping one organisation in the leisure travel industry to utilise Google's new Flexible App Engine in order to build out an exciting new product as a set of Spring Boot microservices.
-                </p>
-            </div>
-            <div class="job">
-                <h4>Screentime Labs</h4>
-                <h5>CTO & Engineer (Mar 2015 to Jan 2016)</h5>
-                <p>
-                    I came on board to help Steve grow the engineering team and the company. We had a good year with some tough challenges and in the process I had to get to grips with Google App Engine as well as some serious Android and iOS development. In the end some personal differences meant that we needed to part ways but the journey was a lot of fun.
-                </p>
-            </div>
-            <div class="job">
-                <h4>Fourthmate</h4>
-                <h5>Founder, Architect & Engineer (Mar 2013 to Mar 2015)</h5>
-                <p>
-                    Fourthmate (now pinpointworks) was a side project for about 2 years where we built out an android client and a spring, couchdb and elastic search back end that was capable of visually tracking work lists for super yachts and schools. In the end the major problem was one of selling rather than technology.
-                </p>
-            </div>
-            <div class="job">
-                <h4>Oracle Corporation</h4>
-                <h5>Principal Software Engineer (Mar 2010 to Mar 2015)</h5>
-                <p>
-                    Working as part of the Oracle Business Intelligence Infrastructure Team in Bristol on the BI Platform, Fusion Applications and later Oracle Public Cloud. Oracle is full of high calibre engineers and I was generally operating as the tech lead within whichever Scrum team I happened to be in.
-                </p>
-            </div>
-            <div class="job">
-                <h4>Comtec Group</h4>
-                <h5>Travel Gateway Architect (May 2008 to Mar 2010)</h5>
-                <p>
-                    I joined Comtec on the back of promises made by the company to inject resources into the Travel Gateway division so that we could re-engineer this core component of the Comtec Travel stack. I spent the first few months designing a modular and highly scalable flight booking engine using Test Driven Design, Spring 3, Spring Web Services and Maven. However, budgetary pressures meant that I found myself in more of a technical project management role.
-                </p>
-            </div>
-            <div class="job">
-                <h4>Onelink Travel Systems</h4>
-                <h5>Lead Architect & Engineer (Dec 2008 to May 2009)</h5>
-                <p>
-                    Funding difficulties meant that this promising start-up failed to survive. However, I spent my first 5 months with the company designing and prototyping a JEE standards based (EJB3, JPA, JAXB Web Services on JBoss), highly scalable, payment settlement system that was going to operate within the Amazon Web Services cloud (EC2, SQS, S3) that would have been capable of handling at least 300 million transactions per year. The RIA administration console has also been prototyped using Microsoft Silverlight and talking to the back end using SOAP Web Services.
-                </p>
-            </div>
-            <div class="job last">
-                <h4>Multicom Products Ltd</h4>
-                <h5>Chief Architect & Development Team Leader (Sep 1999 to Dec 2008)</h5>
-                <p>
-                    Leading the development team in building an industry leading XML web service on an open source Java software stack. My job evolved along with the company and my main duties included systems architecture (new developments), software engineering (new systems and enhancements to the current systems), liaising with the other department heads (prioritising developments and open issues) and managing the work load of the development team. Although I am a capable department head, my interests clearly lie in the fields of Software Architecture and Engineering rather than managing people, which is really why I went looking for something else.
-                </p>
-                <ul>
-                    <b>Key Achievements during my time at Multicom:</b>
-                    <li>Recommended and then implemented a move of the companies development platform from Visual C++ Windows software (with in house scripting language) to Open Source Java</li>
-                    <li>Re-wrote the companies core product (Windows desktop client) as a Java client/server application</li>
-                    <li>Designed & implemented the first leisure GDS Web Service in the UK (and in doing so:)</li>
-                    <li>Invented my own Java/XML data binding framework (before the term was coined)</li>
-                    <li>Invented my own Inversion of Control framework (before Spring was first released)</li>
-                    <li>Implemented my own high performance, XML aware, software load balancer with sticky sessions allowing us to operate the Web Service across multiple servers and sites without loss of service due to upgrades or hardware failure</li>
-                    <li>Implemented a powerful Management Intelligence auditing framework which allows the company to track detailed statistics and automatically produce user-defined reports</li>
-                    <li>Implemented an automated testing service which uses real-world user sessions from the previous days trading to regression test the latest software updates before they are rolled out to the live servers</li>
-                    <li>Designed & implemented our next generation Web Services platform built on top of an open source software stack (Spring, Hibernate, XFire etc) which included highly modular service plug-in architecture, intelligent caching and virtual session technology.</li>
-                </ul>
+        <!-- Interests -->
+        <section class="cv-section">
+            <h2 class="cv-section__title">Beyond Code</h2>
+            <div class="cv-interests">
+                <span class="cv-interest">Dad to 3 amazing kids</span>
+                <span class="cv-interest">Liverpool FC</span>
+                <span class="cv-interest">Serial entrepreneur</span>
+                <span class="cv-interest">Bitcoin maximalist</span>
+                <span class="cv-interest"><a href="https://mixcloud.com/TiGz" target="_blank">Occasional DJ</a></span>
             </div>
         </section>
 
-        <section class="education yui-gf">
-            <div class="section-title">Education</div>
-            <h4>University of Bristol, UK</h4>
-            <p>4 yr Masters of Engineering in Computer Systems Engineering — <strong>2.1</strong></p>
-            <p>Final year thesis was a set of C++ Neural Nets and an engine that used genetic algorithms to converge on the optimum network topology for any given problem domain & dataset.</p>
-        </section>
-
-        <section class="linkedin yui-gf">
-            <div class="section-title">Linked In</div>
-            <p><a href="https://www.linkedin.com/in/adamchesney">https://www.linkedin.com/in/adamchesney</a></p>
-        </section>
-
-        <section class="github yui-gf">
-            <div class="section-title">Github</div>
-            <p><a href="https://github.com/TiGz">https://github.com/TiGz</a></p>
-            <p><a href="https://github.com/CloudburstStrategy">https://github.com/CloudburstStrategy</a></p>
-        </section>
-
-        <section class="other-interests yui-gf">
-            <div class="section-title">Other Interests</div>
-            <p>Being a good dad to my 3 amazing kids</p>
-            <p>Watching every Liverpool FC match</p>
-            <p>Sometimes I try to start businesses :0)</p>
-            <p>Everything Bitcoin... fix the money, fix the world.</p>
-            <p><a href="https://mixcloud.com/TiGz">Occasionally I'm also a DJ</a></p>
-        </section>
-
-        <footer class="text-center">
+        <!-- Footer -->
+        <footer class="cv-footer">
             <p>Adam Chesney — <a href="mailto:ajchesney@gmail.com">ajchesney@gmail.com</a></p>
         </footer>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-pzjw8f+ua7Kw1TIqjRjETcMcOlDAcw6V+n8z7B3EVxUlvY5nU6H1z9Jv7Imdf0L9" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgSN3zmMQDyjoa3toh5jHLwNqQahcnN8H/4pHlfbBS8ka3K0M5D" crossorigin="anonymous"></script>
+    </div>
 </body>
 
 </html>

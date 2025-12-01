@@ -47,3 +47,5 @@ out
 **/.DS_Store
 
 .vagrant
+
+.claude
